@@ -32,6 +32,26 @@ const CharacterList = ({ store }) => {
     })
   }
 
+  const handleDeleteCharacter = id => {
+    store.dispatch(requestData())
+    // 気持ちとしては、axios.delete('/api/characters', { id })
+    axios({
+      method: 'delete',
+      url: '/api/characters',
+      data: {
+        id,
+      }
+    })
+    .then(response => {
+      const _characterArray = response.data
+      store.dispatch(receiveDataSuccess(_characterArray))
+    })
+    .catch(err => {
+      console.error(new Error(err))
+      store.dispatch(receiveDataFailed())
+    })
+  }
+
   return (
     <div>
     {
@@ -44,6 +64,7 @@ const CharacterList = ({ store }) => {
                   <li key={character._id}>
                     {`${character.name} (${character.age})`}
                     <button onClick={() => handleUpdateCharacter(character._id)}>+1</button>
+                    <button onClick={() => handleDeleteCharacter(character._id)}>delete</button>
                   </li>
                 ))}
               </ul>

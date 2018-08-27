@@ -48,6 +48,19 @@ mongoose.connect(dbUrl, dbErr => {
     })
   })
 
+  app.delete('/api/characters', (request, response) => {
+    const { id } = request.body
+    Character.findByIdAndRemove(id, err => {
+      if (err) response.status(500).send()
+      else {
+        Character.find({}, (findErr, characterArray) => {
+          if (findErr) response.status(500).send()
+          else response.status(200).send(characterArray)
+        })
+      }
+    })
+  })
+
 
   // MongoDBに接続してからサーバーを立てるために
   // app.listen()をmongoose.connect()の中に移動
