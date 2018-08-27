@@ -1,12 +1,14 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
+import path from 'path'
 import Character from './character' // モデルをimport
 
 const app = express()
-const port = 3001
-const dbUrl = 'mongodb://localhost/crud'
+const port = process.env.PORT || 3001
+const dbUrl = 'mongodb://admin:abc1234@ds133622.mlab.com:33622/crud'
 
+app.use(express.static(path.join(__dirname, 'client/build')))
 // body-parserを適用
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
