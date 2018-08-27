@@ -28,6 +28,14 @@ mongoose.connect(dbUrl, dbErr => {
     })
   })
 
+  app.get('/api/characters', (request, response) => {
+    Character.find({}, (err, characterArray) => {  // 取得したドキュメントをクライアント側と同じくcharacterArrayと命名
+      if (err) response.status(500).send()
+      else response.status(200).send(characterArray)  // characterArrayをレスポンスとして送り返す
+    })
+  })
+
+
   // MongoDBに接続してからサーバーを立てるために
   // app.listen()をmongoose.connect()の中に移動
   app.listen(port, err => {
