@@ -1,6 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
+import Character from './character' // モデルをimport
 
 const app = express()
 const port = 3001
@@ -16,9 +17,15 @@ mongoose.connect(dbUrl, dbErr => {
 
   // POSTリクエストに対処
   app.post('/api/characters', (request, response) => {
-    console.log('receive POST request')
-    console.log(request.body)  // 送られてきたデータをコンソール出力
-    response.status(200).send()  // クライアントにステータスコード(200:成功)とともにレスポンスを返す
+    const { name, age } = request.body  // 送られてきた名前と年齢を取得
+
+    new Character({
+      name,
+      age,
+    }).save(err => {
+      if (err) response.status(500)
+      else response.status(200).send(`${name}(${age}) was successfully created.`)
+    })
   })
 
   // MongoDBに接続してからサーバーを立てるために
