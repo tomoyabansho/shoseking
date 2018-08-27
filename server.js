@@ -35,6 +35,19 @@ mongoose.connect(dbUrl, dbErr => {
     })
   })
 
+  app.put('/api/characters', (request, response) => {
+    const { id } = request.body  // updateするキャラクターのidをリクエストから取得
+    Character.findByIdAndUpdate(id, { $inc: {"age": 1} }, err => {
+      if (err) response.status(500).send()
+      else {  // updateに成功した場合、すべてのデータをあらためてfindしてクライアントに送る
+        Character.find({}, (findErr, characterArray) => {
+          if (findErr) response.status(500).send()
+          else response.status(200).send(characterArray)
+        })
+      }
+    })
+  })
+
 
   // MongoDBに接続してからサーバーを立てるために
   // app.listen()をmongoose.connect()の中に移動
