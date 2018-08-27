@@ -1,6 +1,12 @@
 import React from 'react'
 import axios from 'axios'
-import { changeName, initializeForm, changeAge } from '../actions'
+import {
+  changeName,
+  initializeForm,
+  changeAge,
+  requestData,
+  receiveDataSuccess,
+  receiveDataFailed } from '../actions'
 
 const AddForm = ({ store }) => {
   const { name, age } = store.getState().form  // storeからフォームの内容を取得
@@ -8,22 +14,25 @@ const AddForm = ({ store }) => {
   const handleSubmit = e => {
     e.preventDefault()    // フォームsubmit時のデフォルトの動作を抑制
 
+    store.dispatch(requestData())
     axios.post('/api/characters', {
       name,
       age,
     })  // キャラクターの名前、年齢からなるオブジェクトをサーバーにPOST
     .then(response => {
-      console.log(response)  // 後で行う動作確認のためのコンソール出力
       store.dispatch(initializeForm())  // submit後はフォームを初期化
+      const characterArray = response.data
+      store.dispatch(receiveDataSuccess(characterArray))
     })
     .catch(err => {
       console.error(new Error(err))
+      store.dispatch(receiveDataFailed())
     })
   }
 
   return (
     <div>
-      <form onSubmit={e => handleSubmit(e)}> 
+      <form onSubmit={e => handleSubmit(e)}>
         <label>
           名前:
           <input value={name} onChange={e => store.dispatch(changeName(e.target.value))} />
