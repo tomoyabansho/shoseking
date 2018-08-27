@@ -24,7 +24,12 @@ mongoose.connect(dbUrl, dbErr => {
       age,
     }).save(err => {
       if (err) response.status(500)
-      else response.status(200).send(`${name}(${age}) was successfully created.`)
+      else {
+        Character.find({}, (findErr, characterArray) => {
+          if (findErr) response.status(500).send()
+          else response.status(200).send(characterArray)
+        })
+      }
     })
   })
 
