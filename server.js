@@ -6,7 +6,7 @@ import Character from './character' // モデルをimport
 
 const app = express()
 const port = process.env.PORT || 3001
-const dbUrl = 'mongodb://localhost/crud'
+const dbUrl = 'mongodb://admin:abc1234@ds133622.mlab.com:33622/crud'
 
 app.use(express.static(path.join(__dirname, 'client/build')))
 // body-parserを適用
