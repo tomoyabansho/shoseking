@@ -9,8 +9,6 @@ export default withRouteData(() => {
   }
 
   const handleSubmit = e => {
-    e.preventDefault()
-
     axios.post('/api/characters', data)
     .then(response => {
       console.log(response)
@@ -22,9 +20,7 @@ export default withRouteData(() => {
 
   return  (
     <div>
-      <form onSubmit={
-        e => handleSubmit(e)
-      }>
+      <form>
         <label>
         名前:
           <input onChange={
@@ -43,8 +39,8 @@ export default withRouteData(() => {
             }
           />
         </label> <br />
-        <button type="submit">submit</button>
       </form>
+      <Link to="/blog" onClick={ handleSubmit }>Post</Link>
     </div>
   )
 })

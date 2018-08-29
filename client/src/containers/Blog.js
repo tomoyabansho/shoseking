@@ -37,6 +37,7 @@ class BlogPage extends React.Component{
         All Posts:
         <ul id="archives">
         </ul>
+        <Link to="/subscribe">Submit</Link>
       </div>
     )
   }
