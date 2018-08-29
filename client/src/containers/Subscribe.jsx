@@ -4,12 +4,17 @@ import { withRouteData, Link } from 'react-static'
 //
 export default withRouteData(() => {
   const data = {
-    name: "",
-    age: -1
+    date: null,
+    writer: -1,
+    title: "",
+    content: "",
+    image_url: ""
   }
 
   const handleSubmit = e => {
-    axios.post('/api/characters', data)
+    data.date = new Date()
+    
+    axios.post('/api/archives', data)
     .then(response => {
       console.log(response)
     })
@@ -22,19 +27,29 @@ export default withRouteData(() => {
     <div>
       <form>
         <label>
-        名前:
+        タイトル:
           <input onChange={
             e => {
-              data.name = e.target.value
+              data.title = e.target.value
             }
           }/>
         </label> <br />
         <label>
-        年齢:
+        感想:
           <input
             onChange={
               e => {
-                data.age = e.target.value
+                data.content = e.target.value
+              }
+            }
+          />
+        </label> <br />
+        <label>
+        投稿者:
+          <input
+            onChange={
+              e => {
+                data.writer = e.target.value
               }
             }
           />

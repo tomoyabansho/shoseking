@@ -9,7 +9,7 @@ class BlogPage extends React.Component{
   constructor(props){
     super(props)
     const parent = this
-    axios.get('/api/characters')
+    axios.get('/api/archives')
     .then(response => {
       response.data.map(user => {
         parent.updateList(user)
@@ -23,7 +23,7 @@ class BlogPage extends React.Component{
   updateList(data){
     const temp = document.createElement("p")
     ReactDOM.render(
-      <li>{ data.name }: { data.age }</li>,
+      <li>{ data.writer }: { data.title }</li>,
       temp
     )
     document.getElementById('archives').appendChild(temp)
