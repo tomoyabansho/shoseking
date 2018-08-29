@@ -16,6 +16,10 @@ export default {
         component: 'src/containers/About',
       },
       {
+        path: '/subscribe',
+        component: 'src/containers/Subscribe',
+      },
+      {
         path: '/blog',
         component: 'src/containers/Blog',
         getData: () => ({
