@@ -22,7 +22,7 @@ export default {
           posts,
         }),
         children: posts.map(post => ({
-          path: `/post/${post.id}`,
+          path: `/post/${post.name}`,
           component: 'src/containers/Post',
           getData: () => ({
             post,
