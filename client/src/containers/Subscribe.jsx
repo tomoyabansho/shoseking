@@ -1,11 +1,24 @@
 import React from 'react'
 import axios from 'axios'
 import { withRouteData, Link } from 'react-static'
+import { FormGroup, ControlLabel, HelpBlock, FormControl } from 'react-bootstrap'
 //
+import 'bootstrap/dist/css/bootstrap.min.css'
+
+const FieldGroup = ({ id, label, help, ...props }) => (
+  <FormGroup controlId={ id }>
+    <ControlLabel>{ label }</ControlLabel>
+    <FormControl { ...props } />
+      {
+        help && <HelpBlock>{ help }</HelpBlock>
+      }
+  </FormGroup>
+)
+
 export default withRouteData(() => {
   const data = {
     date: null,
-    writer: -1,
+    writer: "",
     title: "",
     content: "",
     image_url: ""
@@ -13,7 +26,7 @@ export default withRouteData(() => {
 
   const handleSubmit = e => {
     data.date = new Date()
-    
+
     axios.post('/api/archives', data)
     .then(response => {
       console.log(response)
@@ -26,34 +39,35 @@ export default withRouteData(() => {
   return  (
     <div>
       <form>
-        <label>
-        タイトル:
-          <input onChange={
+        <FieldGroup
+          id="title"
+          label="タイトル:"
+          onChange={
             e => {
               data.title = e.target.value
             }
-          }/>
-        </label> <br />
-        <label>
-        感想:
-          <input
+          }
+        />
+        <FormGroup controlId="content">
+          <ControlLabel>Content</ControlLabel>
+          <FormControl
+            componentClass="textarea"
+            placeholder="感想をどうぞ"
             onChange={
               e => {
                 data.content = e.target.value
               }
+            } />
+        </FormGroup>
+        <FieldGroup
+          id="writer"
+          label="投稿者:"
+          onChange={
+            e => {
+              data.writer = e.target.value
             }
-          />
-        </label> <br />
-        <label>
-        投稿者:
-          <input
-            onChange={
-              e => {
-                data.writer = e.target.value
-              }
-            }
-          />
-        </label> <br />
+          }
+        />
       </form>
       <Link to="/blog" onClick={ handleSubmit }>Post</Link>
     </div>
