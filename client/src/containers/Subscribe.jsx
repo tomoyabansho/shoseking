@@ -1,7 +1,7 @@
 import React from 'react'
+import axios from 'axios'
 import { withRouteData, Link } from 'react-static'
 //
-
 export default withRouteData(() => {
   const data = {
     name: "",
@@ -10,7 +10,14 @@ export default withRouteData(() => {
 
   const handleSubmit = e => {
     e.preventDefault()
-    console.log(data)
+
+    axios.post('/api/characters', data)
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => {
+      console.log(error)
+    })
   }
 
   return  (
@@ -22,7 +29,6 @@ export default withRouteData(() => {
         名前:
           <input onChange={
             e => {
-              console.log(e.target.value)
               data.name = e.target.value
             }
           }/>
@@ -31,7 +37,6 @@ export default withRouteData(() => {
         年齢:
           <input onChange={
             e => {
-              console.log(e.target.value)
               data.age = e.target.value
             }
           }/>
