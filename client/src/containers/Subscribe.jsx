@@ -49,7 +49,7 @@ export default withRouteData(() => {
           }
         />
         <FormGroup controlId="content">
-          <ControlLabel>Content</ControlLabel>
+          <ControlLabel>感想</ControlLabel>
           <FormControl
             componentClass="textarea"
             placeholder="感想をどうぞ"
@@ -69,7 +69,13 @@ export default withRouteData(() => {
           }
         />
       </form>
-      <Link to="/blog" onClick={ handleSubmit }>Post</Link>
+      <Link to="/blog" onClick={ (e) => {
+        if(data.writer != "" && data.title != "" && data.content != ""){
+          handleSubmit()
+        }else{
+          e.preventDefault()
+        }
+      } }>Post</Link>
     </div>
   )
 })
