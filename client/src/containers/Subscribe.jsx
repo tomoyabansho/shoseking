@@ -35,11 +35,13 @@ export default withRouteData(() => {
         </label> <br />
         <label>
         年齢:
-          <input onChange={
-            e => {
-              data.age = e.target.value
+          <input
+            onChange={
+              e => {
+                data.age = e.target.value
+              }
             }
-          }/>
+          />
         </label> <br />
         <button type="submit">submit</button>
       </form>
