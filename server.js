@@ -44,50 +44,27 @@ mongoose.connect(dbUrl, dbErr => {
       else response.status(200).send(archiveArray)  // characterArrayをレスポンスとして送り返す
     })
   })
-/*
-  // POSTリクエストに対処
-  app.post('/api/characters', (request, response) => {
-    const { name, age } = request.body  // 送られてきた名前と年齢を取得
 
-    new Character({
-      name,
-      age,
-    }).save(err => {
-      if (err) response.status(500)
+  app.delete('/api/archives', (request, response) => {
+    const { id } = request.body
+    Archive.findByIdAndRemove(id, err => {
+      if (err) response.status(500).send()
       else {
-        Character.find({}, (findErr, characterArray) => {
+        Archive.find({}, (findErr, archiveArray) => {
           if (findErr) response.status(500).send()
-          else response.status(200).send(characterArray)
+          else response.status(200).send(archiveArray)
         })
       }
     })
   })
 
-  app.get('/api/characters', (request, response) => {
-    Character.find({}, (err, characterArray) => {  // 取得したドキュメントをクライアント側と同じくcharacterArrayと命名
-      if (err) response.status(500).send()
-      else response.status(200).send(characterArray)  // characterArrayをレスポンスとして送り返す
-    })
-  })
+/*
 
   app.put('/api/characters', (request, response) => {
     const { id } = request.body  // updateするキャラクターのidをリクエストから取得
     Character.findByIdAndUpdate(id, { $inc: {"age": 1} }, err => {
       if (err) response.status(500).send()
       else {  // updateに成功した場合、すべてのデータをあらためてfindしてクライアントに送る
-        Character.find({}, (findErr, characterArray) => {
-          if (findErr) response.status(500).send()
-          else response.status(200).send(characterArray)
-        })
-      }
-    })
-  })
-
-  app.delete('/api/characters', (request, response) => {
-    const { id } = request.body
-    Character.findByIdAndRemove(id, err => {
-      if (err) response.status(500).send()
-      else {
         Character.find({}, (findErr, characterArray) => {
           if (findErr) response.status(500).send()
           else response.status(200).send(characterArray)
