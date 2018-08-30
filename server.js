@@ -9,7 +9,7 @@ const app = express()
 const port = process.env.PORT || 3001
 const dbUrl = 'mongodb://admin:aaaa0000@ds127105.mlab.com:27105/shelf'
 
-app.use(express.static(path.join(__dirname, 'client/dist')))
+app.use(express.static(path.join(__dirname, 'client/build')))
 // body-parserを適用
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
