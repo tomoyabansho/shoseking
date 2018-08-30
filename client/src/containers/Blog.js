@@ -2,6 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { withRouteData, Link } from 'react-static'
+import Archive from '../components/Archive'
 //
 
 class BlogPage extends React.Component{
@@ -9,10 +10,11 @@ class BlogPage extends React.Component{
   constructor(props){
     super(props)
     const parent = this
+
     axios.get('/api/archives')
     .then(response => {
-      response.data.map(user => {
-        parent.updateList(user)
+      response.data.map(archive => {
+        parent.updateList(archive)
       })
     })
     .catch(error => {
@@ -20,13 +22,17 @@ class BlogPage extends React.Component{
     })
   }
 
+  componentDidMount(){
+    this.archives = document.getElementById('archives')
+  }
+
   updateList(data){
     const temp = document.createElement("p")
     ReactDOM.render(
-      <li>{ data.writer }: { data.title }</li>,
+      <li><Archive data={ data }/></li>,
       temp
     )
-    document.getElementById('archives').appendChild(temp)
+    this.archives.appendChild(temp)
   }
 
   render(){
