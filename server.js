@@ -40,8 +40,8 @@ mongoose.connect(dbUrl, dbErr => {
 
   app.get('/api/archives', (request, response) => {
     Archive.find({}, (err, archiveArray) => {  // 取得したドキュメントをクライアント側と同じくcharacterArrayと命名
-      if (err) response.status(500).send()
       console.log(archiveArray)
+      if (err) response.status(500).send()
       else response.status(200).send(archiveArray)  // characterArrayをレスポンスとして送り返す
     })
   })

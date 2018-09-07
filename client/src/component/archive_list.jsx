@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import EventBus from 'eventbusjs'
 import logo from '../image/logo.svg';
 import '../style/app.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default class ArchiveList extends Component {
   render() {
