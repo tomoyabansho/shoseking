@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from '../image/logo.svg';
+import 'bootstrap/dist/bootstrap.min.css'
 import '../style/App.css';
-import Form from './form'
+import UserForm from './form'
 import ArchiveList from './archive_list'
 import EventBus from 'eventbusjs'
 import AppModel from '../model/AppModel'
@@ -13,7 +14,7 @@ class App extends Component {
 
     return (
       <div>
-        <Form />
+        <UserForm />
         <ArchiveList />
       </div>
     );

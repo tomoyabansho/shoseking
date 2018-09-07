@@ -4,7 +4,7 @@ import '../style/app.css';
 
 import EventBus from 'eventbusjs'
 
-export default class Form extends Component {
+export default class UserForm extends Component {
   render() {
     return (
       <form onSubmit={ e => {
