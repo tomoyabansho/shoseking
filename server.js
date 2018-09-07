@@ -7,7 +7,7 @@ import Archive from './archive'
 
 const app = express()
 const port = process.env.PORT || 3001
-const dbUrl = 'mongodb://admin:aaaa0000@ds127105.mlab.com:27105/shelf'
+const dbUrl = 'mongodb://admin:000aaaAAA@ds149252.mlab.com:49252/shoseking'
 
 app.use(express.static(path.join(__dirname, 'client/build')))
 // body-parserを適用
@@ -41,6 +41,7 @@ mongoose.connect(dbUrl, dbErr => {
   app.get('/api/archives', (request, response) => {
     Archive.find({}, (err, archiveArray) => {  // 取得したドキュメントをクライアント側と同じくcharacterArrayと命名
       if (err) response.status(500).send()
+      console.log(archiveArray)
       else response.status(200).send(archiveArray)  // characterArrayをレスポンスとして送り返す
     })
   })
@@ -57,22 +58,6 @@ mongoose.connect(dbUrl, dbErr => {
       }
     })
   })
-
-/*
-
-  app.put('/api/characters', (request, response) => {
-    const { id } = request.body  // updateするキャラクターのidをリクエストから取得
-    Character.findByIdAndUpdate(id, { $inc: {"age": 1} }, err => {
-      if (err) response.status(500).send()
-      else {  // updateに成功した場合、すべてのデータをあらためてfindしてクライアントに送る
-        Character.find({}, (findErr, characterArray) => {
-          if (findErr) response.status(500).send()
-          else response.status(200).send(characterArray)
-        })
-      }
-    })
-  })
-*/
 
   // MongoDBに接続してからサーバーを立てるために
   // app.listen()をmongoose.connect()の中に移動

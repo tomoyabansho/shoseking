@@ -3,6 +3,11 @@ import axios from 'axios'
 
 class AppModel{
   constructor(){
+    this.list = {
+      isFetching: false,
+      archiveArray: []
+    }
+
     EventBus.addEventListener('init', event => {
       this.state = {
         date: null,
@@ -32,6 +37,18 @@ class AppModel{
       axios.post('/api/archives', this.state)
         .then(response => {
           console.log(response)
+        })
+        .catch(err => {
+          console.log(new Error(err))
+        })
+    })
+
+    EventBus.addEventListener('fetch', event => {
+      EventBus.dispatch('start load')
+      axios.get('/api/archives')
+        .then(response => {
+          console.log(response.data)
+          EventBus.dispatch('finish load', this, response.data)
         })
         .catch(err => {
           console.log(new Error(err))
