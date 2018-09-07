@@ -7,9 +7,9 @@ import Archive from './archive'
 
 const app = express()
 const port = process.env.PORT || 3001
-const dbUrl = 'mongodb://admin:aaaa0000@ds127105.mlab.com:27105/shelf'
+const dbUrl = 'mongodb://admin:000aaaAAA@ds149252.mlab.com:49252/shoseking'
 
-app.use(express.static(path.join(__dirname, 'client/dist')))
+app.use(express.static(path.join(__dirname, 'client/build')))
 // body-parserを適用
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
@@ -40,62 +40,24 @@ mongoose.connect(dbUrl, dbErr => {
 
   app.get('/api/archives', (request, response) => {
     Archive.find({}, (err, archiveArray) => {  // 取得したドキュメントをクライアント側と同じくcharacterArrayと命名
+      console.log(archiveArray)
       if (err) response.status(500).send()
       else response.status(200).send(archiveArray)  // characterArrayをレスポンスとして送り返す
     })
   })
-/*
-  // POSTリクエストに対処
-  app.post('/api/characters', (request, response) => {
-    const { name, age } = request.body  // 送られてきた名前と年齢を取得
 
-    new Character({
-      name,
-      age,
-    }).save(err => {
-      if (err) response.status(500)
-      else {
-        Character.find({}, (findErr, characterArray) => {
-          if (findErr) response.status(500).send()
-          else response.status(200).send(characterArray)
-        })
-      }
-    })
-  })
-
-  app.get('/api/characters', (request, response) => {
-    Character.find({}, (err, characterArray) => {  // 取得したドキュメントをクライアント側と同じくcharacterArrayと命名
-      if (err) response.status(500).send()
-      else response.status(200).send(characterArray)  // characterArrayをレスポンスとして送り返す
-    })
-  })
-
-  app.put('/api/characters', (request, response) => {
-    const { id } = request.body  // updateするキャラクターのidをリクエストから取得
-    Character.findByIdAndUpdate(id, { $inc: {"age": 1} }, err => {
-      if (err) response.status(500).send()
-      else {  // updateに成功した場合、すべてのデータをあらためてfindしてクライアントに送る
-        Character.find({}, (findErr, characterArray) => {
-          if (findErr) response.status(500).send()
-          else response.status(200).send(characterArray)
-        })
-      }
-    })
-  })
-
-  app.delete('/api/characters', (request, response) => {
+  app.delete('/api/archives', (request, response) => {
     const { id } = request.body
-    Character.findByIdAndRemove(id, err => {
+    Archive.findByIdAndRemove(id, err => {
       if (err) response.status(500).send()
       else {
-        Character.find({}, (findErr, characterArray) => {
+        Archive.find({}, (findErr, archiveArray) => {
           if (findErr) response.status(500).send()
-          else response.status(200).send(characterArray)
+          else response.status(200).send(archiveArray)
         })
       }
     })
   })
-*/
 
   // MongoDBに接続してからサーバーを立てるために
   // app.listen()をmongoose.connect()の中に移動
