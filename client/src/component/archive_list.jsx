@@ -38,7 +38,6 @@ export default class ArchiveList extends Component {
       })
     })
     return (<div className='archive_list'>
-        <Button onClick={() => EventBus.dispatch('fetch')}>fetch data</Button>
         <ul id='archive'></ul>
       </div>)
   }

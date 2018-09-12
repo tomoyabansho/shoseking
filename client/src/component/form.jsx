@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import EventBus from 'eventbusjs'
 import logo from '../image/logo.svg';
 import '../style/form.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-import EventBus from 'eventbusjs'
 import { Form, Button, FormControl, FormGroup, Col, ControlLabel, HelpBlock } from 'react-bootstrap'
 
 function FieldGroup({ id, label, help, ...props }) {
@@ -18,6 +18,20 @@ function FieldGroup({ id, label, help, ...props }) {
 
 export default class UserForm extends Component {
   render() {
+
+    const initForm = () => {
+      const title = document.getElementById('title')
+      const article = document.getElementById('article')
+      const writer = document.getElementById('writer')
+      title.value = ''
+      article.value = ''
+      writer.value = ''
+    }
+
+    EventBus.addEventListener('init form', () => {
+      initForm()
+    })
+
     return (
       <Form className='user_form' onSubmit={ e => {
         e.preventDefault()
