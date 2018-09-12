@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../image/logo.svg';
-import '../style/content.css';
+import '../style/form.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 import EventBus from 'eventbusjs'
@@ -19,7 +19,7 @@ function FieldGroup({ id, label, help, ...props }) {
 export default class UserForm extends Component {
   render() {
     return (
-      <Form onSubmit={ e => {
+      <Form className='user_form' onSubmit={ e => {
         e.preventDefault()
         EventBus.dispatch('submit')
       } }>
