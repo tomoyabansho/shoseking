@@ -1,4 +1,6 @@
 import express from 'express'
+import Http from 'http'
+import Socketio from 'socket.io'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import path from 'path'
@@ -6,6 +8,7 @@ import Character from './character' // モデルをimport
 import Archive from './archive'
 
 const app = express()
+const http = Http.Server(app)
 const port = process.env.PORT || 3001
 const dbUrl = 'mongodb://admin:000aaaAAA@ds149252.mlab.com:49252/shoseking'
 
@@ -14,12 +17,31 @@ app.use(express.static(path.join(__dirname, 'client/build')))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+const io = Socketio.listen(http)
+
 mongoose.connect(dbUrl, dbErr => {
   if (dbErr) throw new Error(dbErr)
   else console.log('db connected')
 
-  app.post('/api/archives', (request, response) => {
-    const { date, writer, title, content, image_url } = request.body
+  http.listen(port, err => {
+    if (err) throw new Error(err)
+    else console.log(`listening on port ${port}`)
+  })
+})
+
+io.sockets.on('connection', socket => {
+  console.log('connected')
+
+  socket.on('get archives', () => {
+    Archive.find({}, (err, archiveArray) => {  // 取得したドキュメントをクライアント側と同じくcharacterArrayと命名
+      console.log(archiveArray)
+      if (err) console.log(err)
+      else io.sockets.emit('send archives', archiveArray)  // characterArrayをレスポンスとして送り返す
+    })
+  })
+
+  socket.on('post archive', archive => {
+    const { date, writer, title, content, image_url } = archive
 
     new Archive({
       date,
@@ -28,41 +50,25 @@ mongoose.connect(dbUrl, dbErr => {
       content,
       image_url
     }).save(err => {
-      if (err) response.status(500)
+      if (err) console.error(err)
       else {
         Archive.find({}, (findErr, archiveArray) => {
-          if (findErr) response.status(500).send()
-          else response.status(200).send()
+          if (findErr) console.error(findErr)
+          else io.sockets.emit('send archives', archiveArray)
         })
       }
     })
   })
 
-  app.get('/api/archives', (request, response) => {
-    Archive.find({}, (err, archiveArray) => {  // 取得したドキュメントをクライアント側と同じくcharacterArrayと命名
-      console.log(archiveArray)
-      if (err) response.status(500).send()
-      else response.status(200).send(archiveArray)  // characterArrayをレスポンスとして送り返す
-    })
-  })
-
-  app.delete('/api/archives', (request, response) => {
-    const { id } = request.body
+  socket.on('delete archive', id => {
     Archive.findByIdAndRemove(id, err => {
       if (err) response.status(500).send()
       else {
         Archive.find({}, (findErr, archiveArray) => {
-          if (findErr) response.status(500).send()
-          else response.status(200).send(archiveArray)
+          if (findErr) console.log(findErr)
+          else io.sockets.emit('send archives', archiveArray)
         })
       }
     })
-  })
-
-  // MongoDBに接続してからサーバーを立てるために
-  // app.listen()をmongoose.connect()の中に移動
-  app.listen(port, err => {
-    if (err) throw new Error(err)
-    else console.log(`listening on port ${port}`)
   })
 })
