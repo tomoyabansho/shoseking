@@ -1,20 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { createStore } from 'redux'
-import App from './components/App'
-import rootReducer from './reducers'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './component/App';
+import registerServiceWorker from './registerServiceWorker';
 
-const store = createStore(rootReducer)
-
-const render = () => {
-  ReactDOM.render(
-    <App store={store} />,
-    document.getElementById('root')
-  )
-}
-
-store.subscribe(() => {
-  render()
-  console.log(store.getState().form)   // 動作確認のためコンソール出力
-})
-render()
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();
