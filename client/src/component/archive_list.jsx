@@ -6,7 +6,7 @@ import Archive from './archive'
 
 import logo from '../image/logo.svg';
 
-import '../style/app.css';
+import '../style/archive_list.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 export default class ArchiveList extends Component {
@@ -36,7 +36,7 @@ export default class ArchiveList extends Component {
         root.appendChild(element)
       })
     })
-    return (<div>
+    return (<div className='archive_list'>
         <Button onClick={() => EventBus.dispatch('fetch')}>fetch data</Button>
         <ul id='archive'></ul>
       </div>)
