@@ -4,8 +4,9 @@ import { Media } from 'react-bootstrap'
 import '../style/archive.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const Archive = ({ date, title, writer, ...props}) => (
-  <Media>
+const Archive = ({ id, date, title, writer, ...props}) => {
+  this.id = id
+  return (<Media>
     <Media.Left>{ date }</Media.Left>
     <Media.Body>
       <Media.Heading>{ title }</Media.Heading>
@@ -13,7 +14,7 @@ const Archive = ({ date, title, writer, ...props}) => (
         { props.children }
       </p>
     </Media.Body>
-  </Media>
-)
+  </Media>)
+}
 
 export default Archive

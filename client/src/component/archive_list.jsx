@@ -30,6 +30,7 @@ export default class ArchiveList extends Component {
         const element = document.createElement('p')
         ReactDOM.render(
           <Archive
+            id={ archive._id }
             title={ archive.title }
             date={ archive.date }
             writer={ archive.writer }>{ archive.content }</Archive>, element)
