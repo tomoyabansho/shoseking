@@ -1,3 +1,8 @@
 #content div {
   margin: 16px;
 }
+
+small {
+  color: #ccc;
+  margin: 8px;
+}

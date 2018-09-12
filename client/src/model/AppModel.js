@@ -54,6 +54,23 @@ class AppModel{
           console.log(new Error(err))
         })
     })
+
+    EventBus.addEventListener('delete', (event, id) => {
+      axios({
+        method: 'delete',
+        url: '/api/archives',
+        data: {
+          id,
+        }
+      })
+      .then(response => {
+        const data = response.data
+        EventBus.dispatch('finish load', this, response.data)
+      })
+      .catch(error => {
+        console.error(error)
+      })
+    })
   }
 }
 
