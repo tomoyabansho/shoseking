@@ -43,6 +43,7 @@ class AppModel{
     EventBus.addEventListener('submit', event => {
       this.state.date = new Date()
       socket.emit('post archive', this.state)
+      EventBus.dispatch('init form')
     })
 
     EventBus.addEventListener('delete', (event, id) => {
