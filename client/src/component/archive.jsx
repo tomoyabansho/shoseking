@@ -6,7 +6,7 @@ import '../style/archive.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Archive = ({ id, date, title, writer, ...props}) => {
-  return (<Media>
+  return (<Media className="article">
     <Media.Left>{ date }</Media.Left>
     <Media.Body>
       <Media.Heading>{ title }<small>{ writer }</small></Media.Heading>
