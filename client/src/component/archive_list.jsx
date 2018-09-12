@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import EventBus from 'eventbusjs'
+import { Button } from 'react-bootstrap'
+import Archive from './archive'
+
 import logo from '../image/logo.svg';
+
 import '../style/app.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 
@@ -24,12 +28,16 @@ export default class ArchiveList extends Component {
       }
       this.archiveArray.map(archive => {
         const element = document.createElement('p')
-        ReactDOM.render(<li>{`${archive.date}-${archive.writer}:${archive.content}`}</li>, element)
+        ReactDOM.render(
+          <Archive
+            title={ archive.title }
+            date={ archive.date }
+            writer={ archive.writer }>{ archive.content }</Archive>, element)
         root.appendChild(element)
       })
     })
     return (<div>
-        <button onClick={() => EventBus.dispatch('fetch')}>fetch data</button>
+        <Button onClick={() => EventBus.dispatch('fetch')}>fetch data</Button>
         <ul id='archive'></ul>
       </div>)
   }
