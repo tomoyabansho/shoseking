@@ -28,8 +28,12 @@ class AppModel{
       }
     })
 
-    EventBus.addEventListener('change title', (event, title) => {
-      this.state.title = title
+    EventBus.addEventListener('change title', (event, query) => {
+      console.log(query)
+    })
+
+    EventBus.addEventListener('select book', (event, value) => {
+      this.state.title = value
     })
 
     EventBus.addEventListener('change content', (event, content) => {
