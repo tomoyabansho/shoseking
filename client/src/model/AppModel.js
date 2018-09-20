@@ -75,6 +75,7 @@ class AppModel{
 
     EventBus.addEventListener('submit', event => {
       this.state.date = new Date()
+      console.log(this.state)
       socket.emit('post archive', this.state)
       EventBus.dispatch('init form')
     })

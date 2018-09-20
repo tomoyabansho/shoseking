@@ -30,7 +30,7 @@ const SearchBooksForm = () => {
   })
   const handleChangeEvent = (event, {value}) => {
     console.log(value)
-    EventBus.dispatch('select book', this, event)
+    EventBus.dispatch('select book', this, value)
   }
   const handleSearchChangeEvent = (event, data) => {
     this.query = data.searchQuery
