@@ -6,3 +6,7 @@ small {
   color: #ccc;
   margin: 8px;
 }
+
+#content .wrap_archive {
+  width: 50%;
+}

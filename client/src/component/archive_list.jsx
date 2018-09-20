@@ -7,7 +7,7 @@ import Archive from './archive'
 import logo from '../image/logo.svg';
 
 import '../style/archive_list.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'semantic-ui-css/semantic.min.css';
 
 export default class ArchiveList extends Component {
   render() {
@@ -27,7 +27,7 @@ export default class ArchiveList extends Component {
         root.removeChild(root.firstChild);
       }
       this.archiveArray.map(archive => {
-        const element = document.createElement('p')
+        const element = document.createElement('div')
         ReactDOM.render(
           <Archive
             id={ archive._id }
@@ -40,7 +40,7 @@ export default class ArchiveList extends Component {
       })
     })
     return (<div className='archive_list'>
-        <Grid id='archive'></Grid>
+        <Grid id='archive' stackable className='wrap_archive_list'></Grid>
       </div>)
   }
 }
