@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import EventBus from 'eventbusjs'
-import { Button } from 'react-bootstrap'
+import { Button, Grid } from 'semantic-ui-react'
 import Archive from './archive'
 
 import logo from '../image/logo.svg';
@@ -32,13 +32,15 @@ export default class ArchiveList extends Component {
           <Archive
             id={ archive._id }
             title={ archive.title }
+            image_url={ archive.image_url }
+            author={ archive.author }
             date={ archive.date }
             writer={ archive.writer }>{ archive.content }</Archive>, element)
         root.appendChild(element)
       })
     })
     return (<div className='archive_list'>
-        <ul id='archive'></ul>
+        <Grid id='archive'></Grid>
       </div>)
   }
 }
