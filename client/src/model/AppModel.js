@@ -33,38 +33,36 @@ class AppModel{
       }
     })
 
-    EventBus.addEventListener('change title', (event, query) => {
-      this.now = new Date()
-      if(!this.execute || this.now - this.execute > 1000){
-        const url = `https://www.googleapis.com/books/v1/volumes?q=${ query }`
-        const array = []
-        axios.get(url)
-          .then(response => {
-            const items = response.data.items
-            items.map(({id, volumeInfo}) => {
-              const thumbnail = volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail
-                ? volumeInfo.imageLinks.thumbnail
-                : "https://picsum.photos/300/450"
-              const item = {
-                key: id,
-                title: volumeInfo.title,
-                author: volumeInfo.authors,
-                thumbnail: thumbnail
-              }
-              array.push(item)
-            })
-            this.items = array
-            EventBus.dispatch('update dropdown', this, this.items)
+    EventBus.addEventListener('search books', (event, query) => {
+      const url = `https://www.googleapis.com/books/v1/volumes?q=${ query }`
+      const array = []
+      axios.get(url)
+        .then(response => {
+          const items = response.data.items
+          items.map(({id, volumeInfo}) => {
+            const thumbnail = volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail
+              ? volumeInfo.imageLinks.thumbnail
+              : "https://picsum.photos/300/450"
+            const item = {
+              key: id,
+              title: volumeInfo.title,
+              author: volumeInfo.authors,
+              thumbnail: thumbnail
+            }
+            array.push(item)
           })
-          .catch(error => {
-            console.error(error)
-          })
-        this.execute = this.now
-        }
+          this.items = array
+          EventBus.dispatch('update dropdown', this, this.items)
+        })
+        .catch(error => {
+          console.error(error)
+        })
     })
 
     EventBus.addEventListener('select book', (event, value) => {
-      this.state.title = value
+      this.state.title = value.title
+      this.state.author = value.author
+      this.state.image_url = value.image
     })
 
     EventBus.addEventListener('change content', (event, content) => {

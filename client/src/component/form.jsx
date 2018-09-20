@@ -20,10 +20,8 @@ export default class UserForm extends Component {
   render() {
 
     const initForm = () => {
-      const title = document.getElementById('title')
       const article = document.getElementById('article')
       const writer = document.getElementById('writer')
-      title.value = ''
       article.value = ''
       writer.value = ''
     }

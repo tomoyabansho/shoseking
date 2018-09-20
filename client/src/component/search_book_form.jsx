@@ -7,39 +7,53 @@ import 'semantic-ui-css/semantic.min.css';
 
 const SearchBooksForm = () => {
   this.state = []
+  this.execute = new Date()
   const clear = () => {
     this.state.splice(0, this.state.length)
   }
 
   EventBus.addEventListener('update dropdown', (event, items) => {
     clear()
-    console.log(items)
     items.map(item => {
       const data = {}
       data.key = item.id
-      data.value = item.id
+      data.value = {
+        title: item.title,
+        image: item.thumbnail,
+        author: item.author
+      }
       data.flag = item.title
       data.text = `${item.title} (${item.author})`
       data.image = item.thumbnail
       this.state.push(data)
     })
   })
-  const onChangeAction = (event, data) => {
-    console.log(data)
-    console.log(event)
-    EventBus.dispatch('select book', this, data.value)
+  const handleChangeEvent = (event, {value}) => {
+    console.log(value)
+    EventBus.dispatch('select book', this, event)
   }
-  const onSearchChangeAction = (event, data) => {
-    EventBus.dispatch('change title', this, data.searchQuery)
+  const handleSearchChangeEvent = (event, data) => {
+    this.query = data.searchQuery
+    if(!this.first){
+      setInterval(() => {
+        if(this.query != '' && (!this.prequery || this.prequery != this.query)){
+          EventBus.dispatch('search books', this, this.query)
+        }
+        this.prequery = this.query
+      }, 2000)
+    }
+    this.first = true
   }
   return (
     <div>
       <Dropdown
         placeholder='タイトルを入力してください'
-        onChange={ onChangeAction }
-        onSearchChange={ onSearchChangeAction }
+        onChange={ handleChangeEvent }
+        onSearchChange={ handleSearchChangeEvent }
         fluid
-        search
+        search={(options, query) => {
+          return options
+        }}
         selection
         options={ this.state } />
     </div>)
