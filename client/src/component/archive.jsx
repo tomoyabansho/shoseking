@@ -5,9 +5,9 @@ import EventBus from 'eventbusjs'
 import '../style/archive.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const Archive = ({ id, date, title, writer, ...props}) => {
+const Archive = ({ id, date, title, writer, image_url,  ...props}) => {
   return (<Media className="article">
-    <Media.Left><img src='https://picsum.photos/300/450' /></Media.Left>
+    <Media.Left><img src={ image_url } /></Media.Left>
     <Media.Body>
       <Media.Heading>{ title }<small>{ writer }</small></Media.Heading>
       <p>

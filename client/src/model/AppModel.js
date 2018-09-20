@@ -4,6 +4,9 @@ import io from 'socket.io-client'
 
 class AppModel{
   constructor(){
+
+    this.items = []
+
     const socket = io('http://localhost:3001');
     socket.on('connect', () => {
       console.log('connected')
@@ -23,13 +26,43 @@ class AppModel{
       this.state = {
         date: null,
         title: "",
+        author: '',
+        image_url: '',
         writer: "",
         content: ""
       }
     })
 
-    EventBus.addEventListener('change title', (event, title) => {
-      this.state.title = title
+    EventBus.addEventListener('search books', (event, query) => {
+      const url = `https://www.googleapis.com/books/v1/volumes?q=${ query }`
+      const array = []
+      axios.get(url)
+        .then(response => {
+          const items = response.data.items
+          items.map(({id, volumeInfo}) => {
+            const thumbnail = volumeInfo.imageLinks && volumeInfo.imageLinks.thumbnail
+              ? volumeInfo.imageLinks.thumbnail
+              : "https://picsum.photos/300/450"
+            const item = {
+              key: id,
+              title: volumeInfo.title,
+              author: volumeInfo.authors,
+              thumbnail: thumbnail
+            }
+            array.push(item)
+          })
+          this.items = array
+          EventBus.dispatch('update dropdown', this, this.items)
+        })
+        .catch(error => {
+          console.error(error)
+        })
+    })
+
+    EventBus.addEventListener('select book', (event, value) => {
+      this.state.title = value.title
+      this.state.author = value.author
+      this.state.image_url = value.image
     })
 
     EventBus.addEventListener('change content', (event, content) => {
@@ -42,6 +75,7 @@ class AppModel{
 
     EventBus.addEventListener('submit', event => {
       this.state.date = new Date()
+      console.log(this.state)
       socket.emit('post archive', this.state)
       EventBus.dispatch('init form')
     })

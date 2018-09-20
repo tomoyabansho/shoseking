@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EventBus from 'eventbusjs'
+import SearchBooksForm from './search_book_form'
 import logo from '../image/logo.svg';
 import '../style/form.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -9,7 +10,6 @@ import { Form, Button, FormControl, FormGroup, Col, ControlLabel, HelpBlock } fr
 function FieldGroup({ id, label, help, ...props }) {
   return (
     <FormGroup controlId={id}>
-      <ControlLabel>{label}</ControlLabel>
       <FormControl {...props} />
       {help && <HelpBlock>{help}</HelpBlock>}
     </FormGroup>
@@ -20,10 +20,8 @@ export default class UserForm extends Component {
   render() {
 
     const initForm = () => {
-      const title = document.getElementById('title')
       const article = document.getElementById('article')
       const writer = document.getElementById('writer')
-      title.value = ''
       article.value = ''
       writer.value = ''
     }
@@ -37,16 +35,8 @@ export default class UserForm extends Component {
         e.preventDefault()
         EventBus.dispatch('submit')
       } }>
-        <FieldGroup
-          id="title"
-          type="text"
-          label="タイトル"
-          placeholder="タイトルを入力してください"
-          onChange={ e => {
-            EventBus.dispatch('change title', this, e.target.value)
-          } } />
+        <SearchBooksForm />
         <FormGroup controlId="article">
-              <ControlLabel>記事</ControlLabel>
               <FormControl
               componentClass="textarea"
               placeholder="記事を入力してください"
@@ -58,7 +48,7 @@ export default class UserForm extends Component {
           id="writer"
           type="text"
           label="投稿者"
-          placeholder="記事を入力してください"
+          placeholder="名前を入力してください"
           onChange={ e => {
             EventBus.dispatch('change writer', this, e.target.value)
           } } />
