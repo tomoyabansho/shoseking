@@ -9,6 +9,7 @@ const ArchiveSchema = new mongoose.Schema({
   writer: String,
   title: String,
   content: String,
+  author: String,
   image_url: String
 })
 

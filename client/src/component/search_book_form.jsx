@@ -1,7 +1,6 @@
 import React from 'react';
 import EventBus from 'eventbusjs'
-import { Dropdown } from 'semantic-ui-react'
-import { Button } from 'react-bootstrap'
+import { Dropdown, Button } from 'semantic-ui-react'
 
 import 'semantic-ui-css/semantic.min.css';
 
@@ -29,7 +28,6 @@ const SearchBooksForm = () => {
     })
   })
   const handleChangeEvent = (event, {value}) => {
-    console.log(value)
     EventBus.dispatch('select book', this, value)
   }
   const handleSearchChangeEvent = (event, data) => {

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import EventBus from 'eventbusjs'
-import { Button } from 'react-bootstrap'
+import { Button, Grid, Table } from 'semantic-ui-react'
 import Archive from './archive'
 
 import logo from '../image/logo.svg';
 
 import '../style/archive_list.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
+import 'semantic-ui-css/semantic.min.css';
 
 export default class ArchiveList extends Component {
   render() {
@@ -26,19 +26,21 @@ export default class ArchiveList extends Component {
       while (root.firstChild) {
         root.removeChild(root.firstChild);
       }
-      this.archiveArray.map(archive => {
-        const element = document.createElement('p')
+      this.archiveArray.reverse().map(archive => {
+        const element = document.createElement('div')
         ReactDOM.render(
           <Archive
             id={ archive._id }
             title={ archive.title }
+            image_url={ archive.image_url }
+            author={ archive.author }
             date={ archive.date }
             writer={ archive.writer }>{ archive.content }</Archive>, element)
         root.appendChild(element)
       })
     })
     return (<div className='archive_list'>
-        <ul id='archive'></ul>
+        <Table id='archive' stackable className='wrap_archive_list'></Table>
       </div>)
   }
 }

@@ -9,7 +9,6 @@ class AppModel{
 
     const socket = io('http://localhost:3001');
     socket.on('connect', () => {
-      console.log('connected')
       socket.emit('get archives')
     })
 
@@ -75,7 +74,6 @@ class AppModel{
 
     EventBus.addEventListener('submit', event => {
       this.state.date = new Date()
-      console.log(this.state)
       socket.emit('post archive', this.state)
       EventBus.dispatch('init form')
     })
