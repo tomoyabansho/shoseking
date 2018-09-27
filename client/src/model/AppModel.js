@@ -7,7 +7,7 @@ class AppModel{
 
     this.items = []
 
-    const socket = io('http://localhost:3001');
+    const socket = io('/');
     socket.on('connect', () => {
       socket.emit('get archives')
     })
