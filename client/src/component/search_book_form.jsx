@@ -28,7 +28,6 @@ const SearchBooksForm = () => {
     })
   })
   const handleChangeEvent = (event, {value}) => {
-    console.log(value)
     EventBus.dispatch('select book', this, value)
   }
   const handleSearchChangeEvent = (event, data) => {

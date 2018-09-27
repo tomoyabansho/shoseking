@@ -34,7 +34,6 @@ io.sockets.on('connection', socket => {
 
   socket.on('get archives', () => {
     Archive.find({}, (err, archiveArray) => {  // 取得したドキュメントをクライアント側と同じくcharacterArrayと命名
-      console.log(archiveArray)
       if (err) console.log(err)
       else io.sockets.emit('send archives', archiveArray)  // characterArrayをレスポンスとして送り返す
     })

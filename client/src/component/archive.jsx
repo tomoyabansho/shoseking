@@ -6,7 +6,6 @@ import '../style/archive.css'
 import 'semantic-ui-css/semantic.min.css';
 
 const Archive = ({ id, date, title, writer, image_url, author, ...props}) => {
-  console.log(author)
   const posted = new Date(date)
   return (
     <div className='wrap_archive'>

@@ -27,7 +27,6 @@ export default class ArchiveList extends Component {
         root.removeChild(root.firstChild);
       }
       this.archiveArray.reverse().map(archive => {
-        console.log(archive.author)
         const element = document.createElement('div')
         ReactDOM.render(
           <Archive

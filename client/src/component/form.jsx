@@ -41,17 +41,15 @@ export default class UserForm extends Component {
           onChange={ e => {
                 EventBus.dispatch('change content', this, e.target.value)
           } } />
-        <Form.Group>
-          <FieldGroup
-            id="writer"
-            type="text"
-            label="投稿者"
-            placeholder="名前を入力してください"
-              onChange={ e => {
-                EventBus.dispatch('change writer', this, e.target.value)
-            } } />
-          <Form.Button type='submit'>submit</Form.Button>
-        </Form.Group>
+        <FieldGroup
+          id="writer"
+          type="text"
+          label="投稿者"
+          placeholder="名前を入力してください"
+            onChange={ e => {
+              EventBus.dispatch('change writer', this, e.target.value)
+          } } />
+        <Form.Button>submit</Form.Button>
       </Form>)
   }
 }
