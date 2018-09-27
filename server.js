@@ -9,7 +9,7 @@ import Archive from './archive'
 
 const app = express()
 const http = Http.Server(app)
-const port = process.env.PORT || 3001
+const port = process.env.PORT || 3000
 const dbUrl = 'mongodb://admin:000aaaAAA@ds149252.mlab.com:49252/shoseking'
 
 app.use(express.static(path.join(__dirname, 'client/build')))
