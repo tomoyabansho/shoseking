@@ -3,16 +3,14 @@ import EventBus from 'eventbusjs'
 import SearchBooksForm from './search_book_form'
 import logo from '../image/logo.svg';
 import '../style/form.css';
-import 'bootstrap/dist/css/bootstrap.min.css'
-
-import { Form, Button, FormControl, FormGroup, Col, ControlLabel, HelpBlock } from 'react-bootstrap'
+import { Form, Button } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css';
 
 function FieldGroup({ id, label, help, ...props }) {
   return (
-    <FormGroup controlId={id}>
-      <FormControl {...props} />
-      {help && <HelpBlock>{help}</HelpBlock>}
-    </FormGroup>
+    <Form.Group>
+      <Form.Input {...props} />
+    </Form.Group>
   );
 }
 
@@ -36,25 +34,24 @@ export default class UserForm extends Component {
         EventBus.dispatch('submit')
       } }>
         <SearchBooksForm />
-        <FormGroup controlId="article">
-              <FormControl
-              componentClass="textarea"
-              placeholder="記事を入力してください"
-              onChange={ e => {
-                EventBus.dispatch('change content', this, e.target.value)
-              } } />
-        </FormGroup>
-        <FieldGroup
-          id="writer"
-          type="text"
-          label="投稿者"
-          placeholder="名前を入力してください"
+        <Form.TextArea
+          label='感想'
+          id='article'
+          placeholder='感想をどうぞ'
           onChange={ e => {
-            EventBus.dispatch('change writer', this, e.target.value)
+                EventBus.dispatch('change content', this, e.target.value)
           } } />
-        <FormGroup>
-          <Button type='submit'>submit</Button>
-        </FormGroup>
+        <Form.Group>
+          <FieldGroup
+            id="writer"
+            type="text"
+            label="投稿者"
+            placeholder="名前を入力してください"
+              onChange={ e => {
+                EventBus.dispatch('change writer', this, e.target.value)
+            } } />
+          <Form.Button type='submit'>submit</Form.Button>
+        </Form.Group>
       </Form>)
   }
 }

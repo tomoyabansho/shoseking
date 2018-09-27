@@ -1,7 +1,6 @@
 import React from 'react';
 import EventBus from 'eventbusjs'
-import { Dropdown } from 'semantic-ui-react'
-import { Button } from 'react-bootstrap'
+import { Dropdown, Button } from 'semantic-ui-react'
 
 import 'semantic-ui-css/semantic.min.css';
 
