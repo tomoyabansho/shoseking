@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom'
 import EventBus from 'eventbusjs'
-import { Button, Grid } from 'semantic-ui-react'
+import { Button, Grid, Table } from 'semantic-ui-react'
 import Archive from './archive'
 
 import logo from '../image/logo.svg';
@@ -26,7 +26,8 @@ export default class ArchiveList extends Component {
       while (root.firstChild) {
         root.removeChild(root.firstChild);
       }
-      this.archiveArray.map(archive => {
+      this.archiveArray.reverse().map(archive => {
+        console.log(archive.author)
         const element = document.createElement('div')
         ReactDOM.render(
           <Archive
@@ -40,7 +41,7 @@ export default class ArchiveList extends Component {
       })
     })
     return (<div className='archive_list'>
-        <Grid id='archive' stackable className='wrap_archive_list'></Grid>
+        <Table id='archive' stackable className='wrap_archive_list'></Table>
       </div>)
   }
 }
