@@ -7,6 +7,20 @@ import 'semantic-ui-css/semantic.min.css';
 
 const Archive = ({ id, date, title, writer, image_url, author, ...props}) => {
   const posted = new Date(date)
+
+  this.editText = text => {
+    const regExp = /(https?:\/\/\S+|\n)/;
+    const regExpBr = /\n/;
+    const regExpLink = /https?:\/\/\S+/;
+    return text.split(regExp).map(function (line,i) {
+        return line.match(regExpBr)
+          ? (<br key={i} />)
+          : line.match(regExpLink)
+            ? (<a target="_blank" href={line} key={i}>{line}</a>)
+            : line
+    });
+  }
+
   return (
     <div className='wrap_archive'>
       <Table.Row className="article">
@@ -17,7 +31,7 @@ const Archive = ({ id, date, title, writer, image_url, author, ...props}) => {
           margin: 16
         }}>
           <Header as='h2'>{ title }: { author }<small>{ writer }</small></Header>
-          <p> { props.children } </p>
+          <p> { this.editText(props.children) } </p>
           <p> { posted.getFullYear() }/{ posted.getMonth() }/{ posted.getDate() } </p>
           <Button onClick={()=>{
             EventBus.dispatch('delete', this, id)
