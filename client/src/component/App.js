@@ -14,7 +14,7 @@ class App extends Component {
     EventBus.dispatch('init')
 
     return (
-      <div>
+      <div className='wrap'>
         <Content />
       </div>
     );

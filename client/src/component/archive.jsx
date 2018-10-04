@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Container, Divider, Button, Header, Grid, Image, Segment, Table } from 'semantic-ui-react'
 import EventBus from 'eventbusjs'
 
-import '../style/archive.css'
 import 'semantic-ui-css/semantic.min.css';
 
 const Archive = ({ id, date, title, writer, image_url, author, ...props}) => {
@@ -30,9 +29,9 @@ const Archive = ({ id, date, title, writer, image_url, author, ...props}) => {
         <Table.Cell width={10} style={{
           margin: 16
         }}>
-          <Header as='h2'>{ title }: { author }<small>{ writer }</small></Header>
+          <Header as='h2'>{ title }<small>: { author }</small></Header>
           <p> { this.editText(props.children) } </p>
-          <p> { posted.getFullYear() }/{ posted.getMonth() }/{ posted.getDate() } </p>
+          <p> <i> written by { writer } on { posted.getFullYear() }/{ posted.getMonth() }/{ posted.getDate() } </i></p>
           <Button onClick={()=>{
             EventBus.dispatch('delete', this, id)
           }}>Delete</Button>
