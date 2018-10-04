@@ -2,6 +2,6 @@
   margin: 16px;
 }
 
-#writer {
-  text-align: left;
+.form_style {
+  width: 100%;
 }

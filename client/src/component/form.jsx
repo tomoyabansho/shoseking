@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import EventBus from 'eventbusjs'
 import SearchBooksForm from './search_book_form'
 import logo from '../image/logo.svg';
-import '../style/form.css';
 import { Form, Button } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css';
+
+import '../style/form.css'
 
 function FieldGroup({ id, label, help, ...props }) {
   return (
@@ -33,11 +34,12 @@ export default class UserForm extends Component {
         e.preventDefault()
         EventBus.dispatch('submit')
       } }>
-        <SearchBooksForm />
+        <SearchBooksForm className='form_style' />
         <Form.TextArea
           label='感想'
           id='article'
           placeholder='感想をどうぞ'
+          className='form_style'
           onChange={ e => {
                 EventBus.dispatch('change content', this, e.target.value)
           } } />
@@ -45,6 +47,7 @@ export default class UserForm extends Component {
           id="writer"
           type="text"
           label="投稿者"
+          className='form_style'
           placeholder="名前を入力してください"
             onChange={ e => {
               EventBus.dispatch('change writer', this, e.target.value)
