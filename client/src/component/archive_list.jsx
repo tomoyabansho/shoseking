@@ -6,7 +6,7 @@ import Archive from './archive'
 
 import logo from '../image/logo.svg';
 
-import '../style/archive_list.css';
+import '../style/archive_list.css'
 import 'semantic-ui-css/semantic.min.css';
 
 export default class ArchiveList extends Component {
@@ -40,7 +40,7 @@ export default class ArchiveList extends Component {
       })
     })
     return (<div className='archive_list'>
-        <Table id='archive' stackable className='wrap_archive_list'></Table>
+        <Table id='archive' stackable></Table>
       </div>)
   }
 }
